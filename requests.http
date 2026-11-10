@@ -1,0 +1,67 @@
+@baseUrl = http://localhost:3001
+
+### ============================================================================
+### 1. Listar todos os tickets (GET /tickets)
+### ============================================================================
+GET {{baseUrl}}/tickets
+Accept: application/json
+
+### ============================================================================
+### 2. Buscar tickets por termo no título (GET /tickets?search=...)
+### ============================================================================
+GET {{baseUrl}}/tickets?search=VPN
+Accept: application/json
+
+### ============================================================================
+### 3. Demonstração de SQL Injection na rota de busca (GET /tickets?search=...)
+### Retorna todos os registros ignorando o filtro por causa da concatenação SQL
+### ============================================================================
+GET {{baseUrl}}/tickets?search=%27%20OR%20%271%27=%271
+Accept: application/json
+
+### ============================================================================
+### 4. Buscar um ticket específico por ID (GET /tickets/:id)
+### ============================================================================
+GET {{baseUrl}}/tickets/1
+Accept: application/json
+
+### ============================================================================
+### 5. Criar um novo ticket válido (POST /tickets)
+### ============================================================================
+POST {{baseUrl}}/tickets
+Content-Type: application/json
+
+{
+  "title": "Falha na sincronização do Active Directory",
+  "description": "Novos colaboradores cadastrados no RH não estão sendo replicados para o AD.",
+  "status": "OPEN"
+}
+
+### ============================================================================
+### 6. Testar erro de validação nos ifs aninhados (POST /tickets - Título curto)
+### ============================================================================
+POST {{baseUrl}}/tickets
+Content-Type: application/json
+
+{
+  "title": "Bug",
+  "description": "Descrição válida com mais de dez caracteres."
+}
+
+### ============================================================================
+### 7. Atualizar status e descrição de um ticket (PUT /tickets/:id)
+### ============================================================================
+PUT {{baseUrl}}/tickets/1
+Content-Type: application/json
+
+{
+  "title": "Erro no servidor VPN corporativo [RESOLVIDO]",
+  "description": "Certificado SSL do gateway VPN foi renovado e o serviço voltou ao normal.",
+  "status": "CLOSED"
+}
+
+### ============================================================================
+### 8. Remover um ticket (DELETE /tickets/:id)
+### ============================================================================
+DELETE {{baseUrl}}/tickets/2
+Accept: application/json

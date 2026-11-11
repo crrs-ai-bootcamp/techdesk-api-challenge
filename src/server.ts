@@ -11,6 +11,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// ============================================================================
+// CREDENCIAIS HARDCODED NO CÓDIGO (Armadilha para o Dia 4 - Sanitização c/ Placeholders)
+// ============================================================================
+const LEGACY_SMTP_URI = 'smtp://suporte_admin:Dentsu@Sup0rt3#2026!Prod@smtp.techdesk.internal:587';
+const MASTER_API_SECRET = 'sk_live_techdesk_998877665544332211_super_secret_key';
+const WEBHOOK_NOTIFICATION_URL = 'https://hooks.techdesk.internal/v1/alerts?apiKey=hk_prod_77665544';
+
 // Cria automaticamente o arquivo SQLite local (techdesk.db) se não existir
 const dbPath = path.resolve(process.cwd(), 'techdesk.db');
 const db = new Database(dbPath);
